@@ -31,11 +31,7 @@ jobs:
           FTP_PASS: ${{ secrets.FTP_PASS }}
         run: |
           sudo apt-get install -y lftp
-          lftp -c "
-            set ftp:passive-mode yes;
-            set net:max-retries 3;
-            set net:reconnect-interval-base 5;
-            open -u $FTP_USER,$FTP_PASS ftp://ftp.domeneshop.no;
-            mirror --reverse --delete --verbose dist/story-living/browser/ www/story-living/;
-            bye
-          "
+          echo "machine ftp.domeneshop.no login ${FTP_USER} password ${FTP_PASS}" > ~/.netrc
+          chmod 600 ~/.netrc
+          lftp -e "set ftp:passive-mode yes; set net:max-retries 3; mirror --reverse --delete dist/story-living/browser/ www/story-living/; bye" ftp://ftp.domeneshop.no
+          rm ~/.netrc
