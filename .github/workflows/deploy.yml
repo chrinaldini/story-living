@@ -26,12 +26,16 @@ jobs:
         run: npm run build
 
       - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASS }}
-          security: unsecure
-          local-dir: ./dist/story-living/browser/
-          server-dir: ./www/story-living/
-          dangerous-clean-slate: false
+        env:
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASS: ${{ secrets.FTP_PASS }}
+        run: |
+          sudo apt-get install -y lftp
+          lftp -c "
+            set ftp:passive-mode yes;
+            set net:max-retries 3;
+            set net:reconnect-interval-base 5;
+            open -u $FTP_USER,$FTP_PASS ftp://ftp.domeneshop.no;
+            mirror --reverse --delete --verbose dist/story-living/browser/ www/story-living/;
+            bye
+          "
