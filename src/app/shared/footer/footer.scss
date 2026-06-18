@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+
+footer {
+  background: var(--teal);
+  color: #cfdedb;
+  padding: 50px 24px;
+}
+
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-brand p {
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+  margin-top: 10px;
+}
+
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  p {
+    font-size: 13px;
+    font-family: Arial, sans-serif;
+
+    & + p {
+      margin-top: 6px;
+    }
+  }
+}

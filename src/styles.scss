@@ -1,0 +1,48 @@
+:root {
+  --ink: #2a1f15;
+  --cream: #f5f2eb;
+  --teal: #004848;
+  --maroon: #a01b25;
+  --coral: #e87c61;
+  --line: #dfe2dc;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Lora', Georgia, serif;
+  --max-w: 1200px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.65;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  color: var(--teal);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

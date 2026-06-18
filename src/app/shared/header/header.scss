@@ -1,0 +1,61 @@
+:host {
+  display: block;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  background: var(--cream);
+  z-index: 100;
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+
+nav ul {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+
+  a {
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--maroon);
+    }
+  }
+}
+
+.enquire-btn {
+  border: 1px solid var(--teal);
+  color: var(--teal);
+  padding: 10px 22px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+
+  &:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: #fff;
+  }
+}
+
+@media (max-width: 900px) {
+  nav ul {
+    display: none;
+  }
+}
