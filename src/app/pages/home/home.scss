@@ -52,6 +52,193 @@ h2 {
   }
 }
 
+.apt-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+
+  img {
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .apt-media-badge {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    background: rgba(0, 30, 30, 0.72);
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  &:hover img,
+  &:focus-visible img {
+    transform: scale(1.05);
+  }
+
+  &:hover .apt-media-badge,
+  &:focus-visible .apt-media-badge {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─── Gallery modal ─────────────────────────────────────────────────────────
+
+.gallery-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 15, 15, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.gallery {
+  background: #fff;
+  width: 100%;
+  max-width: 960px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.gallery-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+
+  h3 {
+    font-size: 20px;
+  }
+}
+
+.gallery-close {
+  border: 0;
+  background: none;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--ink);
+  padding: 0 4px;
+
+  &:hover {
+    color: var(--coral);
+  }
+}
+
+.gallery-stage {
+  position: relative;
+  background: #0e1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: pan-y; // let vertical scroll through, capture horizontal swipe
+
+  img {
+    width: 100%;
+    max-height: 62vh;
+    object-fit: contain;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
+.gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--ink);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #fff;
+  }
+
+  &.prev {
+    left: 16px;
+  }
+
+  &.next {
+    right: 16px;
+  }
+}
+
+.gallery-counter {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  background: rgba(0, 20, 20, 0.7);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.gallery-thumbs {
+  display: flex;
+  gap: 8px;
+  padding: 14px 16px;
+  overflow-x: auto;
+}
+
+.gallery-thumb {
+  flex: 0 0 auto;
+  width: 84px;
+  height: 60px;
+  padding: 0;
+  border: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s, border-color 0.2s;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.active {
+    opacity: 1;
+    border-color: var(--coral);
+  }
+}
+
 .apt-body {
   padding: 24px;
 
@@ -329,6 +516,26 @@ h2 {
 @media (max-width: 600px) {
   .audience-grid {
     grid-template-columns: 1fr;
+  }
+
+  // Smaller, less obtrusive arrows — swipe is the primary control here
+  .gallery-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    background: rgba(255, 255, 255, 0.7);
+
+    &.prev {
+      left: 8px;
+    }
+
+    &.next {
+      right: 8px;
+    }
+  }
+
+  .gallery-stage img {
+    max-height: 54vh;
   }
 
   .amen-grid {

@@ -62,30 +62,30 @@
     <p class="section-lead">Every layout is fully furnished down to the last cushion and coffee cup — designed to feel lived-in from the very first night, whether you're staying ten days or ten months.</p>
     <div class="card-grid">
       <article class="apt-card">
-        <img
-          src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80"
-          alt="Studio apartment interior"
-        >
+        <button type="button" class="apt-media" (click)="openGallery('studio')">
+          <img src="/images/rooms/studio/1.jpg" alt="Studio apartment interior">
+          <span class="apt-media-badge">View gallery · 6 photos</span>
+        </button>
         <div class="apt-body">
           <h3>Studio Apartments</h3>
           <p>A compact, clever world of its own — kitchenette, workspace and bed folded into one bright room for the solo traveler who doesn't need much, just well.</p>
         </div>
       </article>
       <article class="apt-card">
-        <img
-          src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80"
-          alt="One-bedroom apartment interior"
-        >
+        <button type="button" class="apt-media" (click)="openGallery('one-bedroom')">
+          <img src="/images/rooms/one-bedroom/1.jpg" alt="One-bedroom apartment interior">
+          <span class="apt-media-badge">View gallery · 6 photos</span>
+        </button>
         <div class="apt-body">
           <h3>One-Bedroom Apartments</h3>
           <p>A door between sleeping and living, a proper kitchen to cook in, and room to spread your work across the table on a Sunday. Built for the long haul.</p>
         </div>
       </article>
       <article class="apt-card">
-        <img
-          src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80"
-          alt="Two-bedroom apartment interior"
-        >
+        <button type="button" class="apt-media" (click)="openGallery('two-bedroom')">
+          <img src="/images/rooms/two-bedroom/1.jpg" alt="Two-bedroom apartment interior">
+          <span class="apt-media-badge">View gallery · 8 photos</span>
+        </button>
         <div class="apt-body">
           <h3>Two-Bedroom Apartments</h3>
           <p>Two rooms to close the door on, one big enough to gather in. Made for families mid-move and colleagues who'd rather not share a wall they can hear through.</p>
@@ -180,3 +180,36 @@
     <p class="map-note">Story Living sits on Lidingö, directly east of central Stockholm — a 10-minute drive or tram ride across the Lidingöbron bridge.</p>
   </div>
 </section>
+
+<!-- ─── Gallery modal ─────────────────────────────────────────────────── -->
+@if (activeRoom(); as room) {
+  <div class="gallery-overlay" (click)="close()">
+    <div class="gallery" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" [attr.aria-label]="room.title + ' photo gallery'">
+      <div class="gallery-head">
+        <h3>{{ room.title }}</h3>
+        <button type="button" class="gallery-close" (click)="close()" aria-label="Close gallery">&times;</button>
+      </div>
+
+      <div class="gallery-stage" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+        <button type="button" class="gallery-nav prev" (click)="prev()" aria-label="Previous photo">&#8249;</button>
+        <img [src]="images()[currentIndex()]" [alt]="room.title + ' photo ' + (currentIndex() + 1)">
+        <button type="button" class="gallery-nav next" (click)="next()" aria-label="Next photo">&#8250;</button>
+        <span class="gallery-counter">{{ currentIndex() + 1 }} / {{ images().length }}</span>
+      </div>
+
+      <div class="gallery-thumbs">
+        @for (img of images(); track img; let i = $index) {
+          <button
+            type="button"
+            class="gallery-thumb"
+            [class.active]="i === currentIndex()"
+            (click)="goTo(i)"
+            [attr.aria-label]="'Go to photo ' + (i + 1)"
+          >
+            <img [src]="img" [alt]="room.title + ' thumbnail ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+}

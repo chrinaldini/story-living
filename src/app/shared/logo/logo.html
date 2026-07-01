@@ -1,6 +1,5 @@
-<div class="logo" [class.on-dark]="onDark()">
-  <div class="word">
-    <span class="s">S</span><span class="t">T</span><span class="o">O</span><span class="r">R</span><span class="y">Y</span>
-  </div>
-  <div class="sub">(Living)</div>
-</div>
+@if (onDark()) {
+  <img class="logo" src="/logo/story-living-white.png" alt="Story Living" />
+} @else {
+  <img class="logo" src="/logo/story-living-color-black.png" alt="Story Living" />
+}
