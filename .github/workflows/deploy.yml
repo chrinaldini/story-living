@@ -1,4 +1,4 @@
-name: Deploy to story-living.snicolaysen.no
+name: Deploy to storyliving.snicolaysen.no
 
 on:
   push:
@@ -37,7 +37,7 @@ jobs:
               --ftp-create-dirs \
               --ftp-pasv \
               --user "${FTP_USER}:${FTP_PASS}" \
-              "ftp://ftp.domeneshop.no/www/story-living/${remote}" \
+              "ftp://ftp.domeneshop.no/www/storyliving/${remote}" \
               --retry 3 --retry-delay 2
           done
           echo "Deploy complete."
