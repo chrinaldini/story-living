@@ -14,7 +14,7 @@ $FROM = 'Story Living <no-reply@storyliving.se>';
 
 // reCAPTCHA v2 secret key — the SECRET half of the key pair (site key in home.ts).
 // Manage the key pair at https://www.google.com/recaptcha/admin
-$RECAPTCHA_SECRET = '6LcHcj8tAAAAAB3UQ9mAKUmnA73kWoTeBE0A9Sw_';
+$RECAPTCHA_SECRET = '6LeMeT8tAAAAAKHeilPRPQt-1ZRGHEUT2y6KickE';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);

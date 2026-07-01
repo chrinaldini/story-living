@@ -11,7 +11,7 @@ interface RoomType {
 
 // reCAPTCHA v2 site key ("I'm not a robot" checkbox). The matching SECRET key
 // lives in contact.php. Manage the key pair at https://www.google.com/recaptcha/admin
-const RECAPTCHA_SITE_KEY = '6LcHcj8tAAAAAJb4wrv1Nodukl07aBBwu_FIi8Fz';
+const RECAPTCHA_SITE_KEY = '6LeMeT8tAAAAAGG658WPNaDwIq1tioCSPevjCx89';
 
 declare const grecaptcha: {
   render: (el: HTMLElement, opts: { sitekey: string }) => number;
@@ -34,10 +34,24 @@ export class HomeComponent {
       const path = this.location.path().replace(/^\//, '').split(/[?#]/)[0];
       if (HOME_SECTIONS.includes(path)) {
         this.currentPath = path;
-        document.getElementById(path)?.scrollIntoView(); // scroll-margin-top handles the fixed header
+        this.deepLinkScroll(path);
       }
       this.renderRecaptcha();
     });
+  }
+
+  // Scroll to a deep-linked section. Images and web fonts load after the first
+  // render and shift the layout, so re-run the scroll as the page settles.
+  private deepLinkScroll(id: string): void {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    const scroll = () => document.getElementById(id)?.scrollIntoView();
+
+    scroll();
+    requestAnimationFrame(scroll);
+    setTimeout(scroll, 250);
+    setTimeout(scroll, 800);
+    window.addEventListener('load', () => scroll(), { once: true });
+    (document as { fonts?: { ready?: Promise<unknown> } }).fonts?.ready?.then(() => scroll());
   }
 
   private recaptchaWidgetId: number | null = null;
