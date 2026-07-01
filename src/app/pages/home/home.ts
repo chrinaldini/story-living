@@ -32,6 +32,22 @@ export class HomeComponent {
   readonly activeRoom = signal<RoomType | null>(null);
   readonly currentIndex = signal(0);
 
+  // Parallax offset (px) for the hero background, driven by scroll
+  readonly heroOffset = signal(0);
+  private parallaxTicking = false;
+  private readonly reduceMotion =
+    typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    if (this.reduceMotion || this.parallaxTicking) return;
+    this.parallaxTicking = true;
+    requestAnimationFrame(() => {
+      this.heroOffset.set(window.scrollY * 0.2);
+      this.parallaxTicking = false;
+    });
+  }
+
   readonly images = () => {
     const room = this.activeRoom();
     if (!room) return [];

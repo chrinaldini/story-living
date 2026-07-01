@@ -8,6 +8,7 @@
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'Lora', Georgia, serif;
   --max-w: 1200px;
+  --header-h: 96px;
 }
 
 *,
@@ -45,4 +46,13 @@ h4 {
 img {
   display: block;
   max-width: 100%;
+}
+
+// Fixed header offset: push page content down and keep in-page anchors visible
+main {
+  padding-top: var(--header-h);
+}
+
+section[id] {
+  scroll-margin-top: var(--header-h);
 }

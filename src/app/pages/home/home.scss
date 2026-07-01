@@ -260,15 +260,26 @@ h2 {
   position: relative;
   height: 90vh;
   min-height: 560px;
-  background: url('/images/misc/booboo-2024-emil-lif-lif1-47.jpg')
-    center / cover no-repeat;
   display: flex;
   align-items: center;
+  overflow: hidden; // clip the oversized parallax layer
+
+  // Parallax layer: taller than the section so it never reveals an edge
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -22% 0;
+    background: url('/images/misc/booboo-2024-emil-lif-lif1-47.jpg') center / cover no-repeat;
+    transform: translateY(var(--hero-shift, 0));
+    will-change: transform;
+    z-index: 0;
+  }
 
   &::after {
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 1;
     background: linear-gradient(180deg, rgba(0, 30, 30, 0.3), rgba(0, 20, 20, 0.6));
   }
 }

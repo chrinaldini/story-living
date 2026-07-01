@@ -3,15 +3,24 @@
 }
 
 header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-h);
   background: var(--cream);
   z-index: 100;
   border-bottom: 1px solid var(--line);
+  transition: box-shadow 0.25s ease;
+}
+
+:host(.scrolled) header {
+  box-shadow: 0 4px 16px rgba(0, 30, 30, 0.08);
 }
 
 .nav-inner {
   max-width: var(--max-w);
+  height: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
