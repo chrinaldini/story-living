@@ -170,14 +170,77 @@
         <div class="stat-label">Apartment Types</div>
       </div>
     </div>
+    <address class="loc-address">Agavägen 11, 181 55 Lidingö<br>Stockholm, Sweden</address>
     <div class="map-wrap">
       <iframe
-        src="https://www.openstreetmap.org/export/embed.html?bbox=18.0950%2C59.3400%2C18.1750%2C59.3750&layer=mapnik&marker=59.3540%2C18.1295"
+        src="https://www.google.com/maps?q=Agav%C3%A4gen%2011%2C%20181%2055%20Liding%C3%B6%2C%20Sweden&z=14&output=embed"
         loading="lazy"
-        title="Story Living location in the Dalénum district of Lidingö"
+        title="Story Living at Agavägen 11, Lidingö"
       ></iframe>
     </div>
     <p class="map-note">Story Living sits on Lidingö, directly east of central Stockholm — a 10-minute drive or tram ride across the Lidingöbron bridge.</p>
+  </div>
+</section>
+
+<!-- ─── Contact ───────────────────────────────────────────────────────── -->
+<section class="contact" id="contact">
+  <div class="inner contact-inner">
+    <div class="eyebrow">Get in touch</div>
+    <h2>Enquiries &amp; reservations</h2>
+    <p class="section-lead">Tell us a little about your stay and we'll get back to you. For bookings, choose "Reservation" and it goes straight to our reservations team.</p>
+
+    @if (formState() === 'success') {
+      <p class="form-success">Thank you — your message is on its way. We'll be in touch shortly.</p>
+    } @else {
+      <form class="contact-form" (submit)="onSubmit($event)" novalidate>
+        <!-- Honeypot: hidden from people, catches bots -->
+        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <p class="req-note">Fields marked <span class="req">*</span> are required.</p>
+
+        <div class="field">
+          <label for="cf-name">Name <span class="req">*</span></label>
+          <input id="cf-name" name="name" type="text" autocomplete="name"
+                 [class.invalid]="!!fieldErrors()['name']">
+          @if (fieldErrors()['name']) { <p class="field-error">{{ fieldErrors()['name'] }}</p> }
+        </div>
+        <div class="field">
+          <label for="cf-email">Email <span class="req">*</span></label>
+          <input id="cf-email" name="email" type="email" autocomplete="email"
+                 [class.invalid]="!!fieldErrors()['email']">
+          @if (fieldErrors()['email']) { <p class="field-error">{{ fieldErrors()['email'] }}</p> }
+        </div>
+        <div class="field">
+          <label for="cf-phone">Phone <span class="opt">(optional)</span></label>
+          <input id="cf-phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="cf-regarding">Regarding</label>
+          <select id="cf-regarding" name="regarding">
+            <option value="enquiry">General enquiry</option>
+            <option value="reservation">Reservation</option>
+          </select>
+        </div>
+        <div class="field field-full">
+          <label for="cf-message">Message <span class="req">*</span></label>
+          <textarea id="cf-message" name="message" rows="5"
+                    [class.invalid]="!!fieldErrors()['message']"></textarea>
+          @if (fieldErrors()['message']) { <p class="field-error">{{ fieldErrors()['message'] }}</p> }
+        </div>
+        <div class="field field-full">
+          <div id="recaptcha-container"></div>
+          @if (fieldErrors()['human']) { <p class="field-error">{{ fieldErrors()['human'] }}</p> }
+        </div>
+
+        @if (formState() === 'error' && formError()) {
+          <p class="form-error">{{ formError() }}</p>
+        }
+
+        <button type="submit" class="submit-btn" [disabled]="formState() === 'sending'">
+          {{ formState() === 'sending' ? 'Sending…' : 'Send message' }}
+        </button>
+      </form>
+    }
   </div>
 </section>
 

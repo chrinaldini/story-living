@@ -1,4 +1,6 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { afterNextRender, Component, HostListener, inject, signal } from '@angular/core';
+import { Location } from '@angular/common';
+import { HOME_SECTIONS } from '../../app.routes';
 
 interface RoomType {
   key: string;
@@ -7,12 +9,49 @@ interface RoomType {
   count: number;
 }
 
+// reCAPTCHA v2 site key ("I'm not a robot" checkbox). The matching SECRET key
+// lives in contact.php. Manage the key pair at https://www.google.com/recaptcha/admin
+const RECAPTCHA_SITE_KEY = '6LcHcj8tAAAAAJb4wrv1Nodukl07aBBwu_FIi8Fz';
+
+declare const grecaptcha: {
+  render: (el: HTMLElement, opts: { sitekey: string }) => number;
+  getResponse: (id?: number) => string;
+  reset: (id?: number) => void;
+};
+
 @Component({
   selector: 'sl-home',
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
 export class HomeComponent {
+  private readonly location = inject(Location);
+  private currentPath = '';
+
+  constructor() {
+    afterNextRender(() => {
+      // On first load / deep link (e.g. /apartments), scroll to that section.
+      const path = this.location.path().replace(/^\//, '').split(/[?#]/)[0];
+      if (HOME_SECTIONS.includes(path)) {
+        this.currentPath = path;
+        document.getElementById(path)?.scrollIntoView(); // scroll-margin-top handles the fixed header
+      }
+      this.renderRecaptcha();
+    });
+  }
+
+  private recaptchaWidgetId: number | null = null;
+
+  // The reCAPTCHA script loads async, so poll briefly until it's ready, then
+  // render the widget explicitly into the form's container.
+  private renderRecaptcha(attempts = 0): void {
+    const el = document.getElementById('recaptcha-container');
+    if (el && typeof grecaptcha !== 'undefined' && grecaptcha.render && el.childElementCount === 0) {
+      this.recaptchaWidgetId = grecaptcha.render(el, { sitekey: RECAPTCHA_SITE_KEY });
+    } else if (this.recaptchaWidgetId === null && attempts < 50) {
+      setTimeout(() => this.renderRecaptcha(attempts + 1), 200);
+    }
+  }
   readonly rooms: Record<string, RoomType> = {
     studio: { key: 'studio', title: 'Studio Apartments', folder: 'studio', count: 6 },
     'one-bedroom': {
@@ -34,18 +73,37 @@ export class HomeComponent {
 
   // Parallax offset (px) for the hero background, driven by scroll
   readonly heroOffset = signal(0);
-  private parallaxTicking = false;
+  private scrollTicking = false;
   private readonly reduceMotion =
     typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
-    if (this.reduceMotion || this.parallaxTicking) return;
-    this.parallaxTicking = true;
+    if (this.scrollTicking) return;
+    this.scrollTicking = true;
     requestAnimationFrame(() => {
-      this.heroOffset.set(window.scrollY * 0.2);
-      this.parallaxTicking = false;
+      if (!this.reduceMotion) this.heroOffset.set(window.scrollY * 0.2);
+      this.syncUrlToSection();
+      this.scrollTicking = false;
     });
+  }
+
+  // Scroll-spy: update the URL to the section currently under the header,
+  // without triggering router navigation (so the page never reloads).
+  private syncUrlToSection(): void {
+    const headerH =
+      parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 96;
+
+    let active = '';
+    for (const id of HOME_SECTIONS) {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= headerH + 8) active = id;
+    }
+
+    if (active !== this.currentPath) {
+      this.currentPath = active;
+      this.location.replaceState(active ? '/' + active : '/');
+    }
   }
 
   readonly images = () => {
@@ -107,5 +165,59 @@ export class HomeComponent {
     if (event.key === 'Escape') this.close();
     else if (event.key === 'ArrowRight') this.next();
     else if (event.key === 'ArrowLeft') this.prev();
+  }
+
+  // ─── Contact form ─────────────────────────────────────────────────────────
+  readonly formState = signal<'idle' | 'sending' | 'success' | 'error'>('idle');
+  readonly formError = signal('');
+  readonly fieldErrors = signal<Record<string, string>>({});
+
+  async onSubmit(event: Event): Promise<void> {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const data = new FormData(form);
+
+    // Client-side validation with per-field messages
+    const errors: Record<string, string> = {};
+    const name = ((data.get('name') as string) ?? '').trim();
+    const email = ((data.get('email') as string) ?? '').trim();
+    const message = ((data.get('message') as string) ?? '').trim();
+
+    if (!name) errors['name'] = 'Please enter your name.';
+    if (!email) errors['email'] = 'Please enter your email.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      errors['email'] = 'Please enter a valid email address.';
+    if (!message) errors['message'] = 'Please enter a message.';
+
+    const token =
+      typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse(this.recaptchaWidgetId ?? undefined) : '';
+    if (!token) errors['human'] = "Please confirm you're not a robot.";
+
+    if (Object.keys(errors).length > 0) {
+      this.fieldErrors.set(errors);
+      this.formError.set('');
+      this.formState.set('error');
+      return;
+    }
+
+    this.fieldErrors.set({});
+    this.formState.set('sending');
+    this.formError.set('');
+
+    try {
+      const res = await fetch('/contact.php', { method: 'POST', body: data });
+      const json = await res.json().catch(() => ({ ok: false }));
+      if (res.ok && json.ok) {
+        this.formState.set('success');
+        form.reset();
+      } else {
+        this.formError.set(json.error || 'Something went wrong. Please try again.');
+        this.formState.set('error');
+        if (this.recaptchaWidgetId !== null) grecaptcha.reset(this.recaptchaWidgetId);
+      }
+    } catch {
+      this.formError.set('Could not reach the server. Please try again later.');
+      this.formState.set('error');
+    }
   }
 }

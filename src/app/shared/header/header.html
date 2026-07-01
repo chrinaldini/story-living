@@ -1,16 +1,16 @@
 <header>
   <div class="nav-inner">
-    <a routerLink="/" aria-label="Story Living home">
+    <a href="/" (click)="onNav($event, '')" aria-label="Story Living home">
       <sl-logo />
     </a>
     <nav>
       <ul>
-        <li><a href="#apartments">Apartments</a></li>
-        <li><a href="#amenities">Amenities</a></li>
-        <li><a href="#neighborhood">Neighborhood</a></li>
-        <li><a href="#location">Location</a></li>
+        <li><a href="/apartments" (click)="onNav($event, 'apartments')">Apartments</a></li>
+        <li><a href="/amenities" (click)="onNav($event, 'amenities')">Amenities</a></li>
+        <li><a href="/neighborhood" (click)="onNav($event, 'neighborhood')">Neighborhood</a></li>
+        <li><a href="/location" (click)="onNav($event, 'location')">Location</a></li>
       </ul>
     </nav>
-    <a class="enquire-btn" href="#contact">Enquire</a>
+    <a class="enquire-btn" href="/contact" (click)="onNav($event, 'contact')">Enquire</a>
   </div>
 </header>
