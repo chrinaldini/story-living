@@ -1,16 +1,45 @@
 <header>
   <div class="nav-inner">
-    <a href="/" (click)="onNav($event, '')" aria-label="Story Living home">
+    <a class="logo-link" [href]="link('')" (click)="onNav($event, '')" aria-label="Story Living home">
       <sl-logo />
     </a>
-    <nav>
+    <nav class="desktop-nav">
       <ul>
-        <li><a href="/apartments" (click)="onNav($event, 'apartments')">Apartments</a></li>
-        <li><a href="/amenities" (click)="onNav($event, 'amenities')">Amenities</a></li>
-        <li><a href="/neighborhood" (click)="onNav($event, 'neighborhood')">Neighborhood</a></li>
-        <li><a href="/location" (click)="onNav($event, 'location')">Location</a></li>
+        <li><a [href]="link('apartments')" (click)="onNav($event, 'apartments')">Apartments</a></li>
+        <li><a [href]="link('amenities')" (click)="onNav($event, 'amenities')">Amenities</a></li>
+        <li><a [href]="link('neighborhood')" (click)="onNav($event, 'neighborhood')">Neighborhood</a></li>
+        <li><a [href]="link('location')" (click)="onNav($event, 'location')">Location</a></li>
       </ul>
     </nav>
-    <a class="enquire-btn" href="/contact" (click)="onNav($event, 'contact')">Bookings and Enquiries</a>
+    <div class="nav-actions">
+      <a class="variant-btn desktop-only" [href]="other().path" (click)="switchVariant($event)" [attr.aria-label]="'Switch to the ' + other().label + ' site'">
+        <span class="material-icons" aria-hidden="true">{{ other().icon }}</span>
+        <span>{{ other().label }}?</span>
+      </a>
+      <a class="enquire-btn" [href]="link('contact')" (click)="onNav($event, 'contact')">Bookings and Enquiries</a>
+      <button
+        type="button"
+        class="burger"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="mobile-menu"
+        aria-label="Menu"
+      >
+        <span class="material-icons">{{ menuOpen() ? 'close' : 'menu' }}</span>
+      </button>
+    </div>
   </div>
+
+  @if (menuOpen()) {
+    <nav class="mobile-menu" id="mobile-menu">
+      <a [href]="link('apartments')" (click)="onNav($event, 'apartments')">Apartments</a>
+      <a [href]="link('amenities')" (click)="onNav($event, 'amenities')">Amenities</a>
+      <a [href]="link('neighborhood')" (click)="onNav($event, 'neighborhood')">Neighborhood</a>
+      <a [href]="link('location')" (click)="onNav($event, 'location')">Location</a>
+      <a class="mobile-variant" [href]="other().path" (click)="switchVariant($event)">
+        <span class="material-icons" aria-hidden="true">{{ other().icon }}</span>
+        <span>{{ other().label }}?</span>
+      </a>
+    </nav>
+  }
 </header>

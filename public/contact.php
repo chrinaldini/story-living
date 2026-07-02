@@ -79,6 +79,7 @@ $email     = trim($_POST['email'] ?? '');
 $phone     = trim($_POST['phone'] ?? '');
 $regarding = ($_POST['regarding'] ?? 'enquiry') === 'reservation' ? 'reservation' : 'enquiry';
 $message   = trim($_POST['message'] ?? '');
+$segment   = trim($_POST['segment'] ?? '');
 
 if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || $message === '') {
     http_response_code(422);
@@ -90,11 +91,14 @@ if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || $message === '
 $safeName  = preg_replace('/[\r\n]+/', ' ', $name);
 $safeEmail = preg_replace('/[\r\n]+/', '', $email);
 
+$safeSegment = preg_replace('/[\r\n]+/', ' ', $segment);
+
 $to      = $RECIPIENTS[$regarding];
 $label   = $regarding === 'reservation' ? 'Reservation request' : 'Enquiry';
-$subject = "$label from $safeName";
+$subject = ($safeSegment !== '' ? "[$safeSegment] " : '') . "$label from $safeName";
 
 $body = "New $label from the Story Living website\n\n"
+    . "Site: " . ($safeSegment !== '' ? $safeSegment : '—') . "\n"
     . "Name: $name\n"
     . "Email: $email\n"
     . "Phone: " . ($phone !== '' ? $phone : '—') . "\n"

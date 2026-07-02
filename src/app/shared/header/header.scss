@@ -30,7 +30,7 @@ header {
 
 nav ul {
   display: flex;
-  gap: 32px;
+  gap: 26px;
   list-style: none;
   font-size: 13px;
   letter-spacing: 1px;
@@ -46,6 +46,34 @@ nav ul {
   }
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.variant-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  transition: color 0.2s;
+
+  .material-icons {
+    display: block;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  &:hover {
+    color: var(--maroon);
+  }
+}
+
 .enquire-btn {
   border: 1px solid var(--teal);
   color: var(--teal);
@@ -54,6 +82,7 @@ nav ul {
   letter-spacing: 1px;
   text-transform: uppercase;
   font-family: Arial, sans-serif;
+  white-space: nowrap;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
 
   &:hover {
@@ -63,8 +92,90 @@ nav ul {
   }
 }
 
-@media (max-width: 900px) {
-  nav ul {
+// Burger button — hidden on desktop, shown on mobile
+.burger {
+  display: none;
+  border: 0;
+  background: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--ink);
+
+  .material-icons {
+    display: block;
+    font-size: 28px;
+  }
+}
+
+// Mobile dropdown menu with all sub-links + the variant switch
+.mobile-menu {
+  position: absolute;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 8px 16px rgba(0, 30, 30, 0.08);
+  display: flex;
+  flex-direction: column;
+  padding: 4px 24px 12px;
+
+  a {
+    padding: 15px 2px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: Arial, sans-serif;
+    border-bottom: 1px solid var(--line);
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--maroon);
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  .mobile-variant {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--maroon);
+
+    .material-icons {
+      font-size: 20px;
+    }
+  }
+}
+
+// Switch to the burger menu well before the desktop row gets cramped.
+@media (max-width: 1200px) {
+  .desktop-nav,
+  .variant-btn.desktop-only {
     display: none;
+  }
+
+  .burger {
+    display: block;
+  }
+}
+
+@media (min-width: 1201px) {
+  // Safety: never show the mobile menu on desktop (e.g. after a resize)
+  .mobile-menu {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-inner {
+    padding: 0 16px;
+  }
+
+  .enquire-btn {
+    padding: 9px 13px;
+    font-size: 11px;
   }
 }

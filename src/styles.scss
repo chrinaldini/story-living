@@ -1,3 +1,7 @@
+// Shared landing-page section styles (used by both the home and corporate
+// variant section components). Global so they apply across component boundaries.
+@use './app/pages/home/home';
+
 :root {
   --ink: #2a1f15;
   --cream: #f5f2eb;

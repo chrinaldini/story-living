@@ -264,12 +264,14 @@ h2 {
   align-items: center;
   overflow: hidden; // clip the oversized parallax layer
 
-  // Parallax layer: taller than the section so it never reveals an edge
+  // Parallax layer: taller than the section so it never reveals an edge.
+  // Each variant sets --hero-image on the .hero element.
   &::before {
     content: '';
     position: absolute;
     inset: -22% 0;
-    background: url('/images/misc/booboo-2024-emil-lif-lif1-47.jpg') center / cover no-repeat;
+    background: var(--hero-image, url('/images/misc/booboo-2024-emil-lif-lif1-47.jpg')) center / cover
+      no-repeat;
     transform: translateY(var(--hero-shift, 0));
     will-change: transform;
     z-index: 0;
