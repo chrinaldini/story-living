@@ -525,28 +525,45 @@ h2 {
 }
 
 .contact-details {
-  margin-top: 20px;
+  margin: 20px auto 0;
+  width: max-content;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 12px;
+  row-gap: 6px;
   font-size: 16px;
 
-  a {
-    color: var(--teal);
-    text-decoration: underline;
+  dt {
+    text-align: right;
+    color: #5a4f43;
 
-    &:hover {
-      color: var(--coral);
+    &::after {
+      content: ':';
     }
   }
 
-  p + p {
-    margin-top: 4px;
-  }
+  dd {
+    margin: 0;
+    text-align: left;
 
-  .contact-or {
-    margin-top: 14px;
-    font-size: 14px;
-    color: #7a6f60;
-    font-family: Arial, sans-serif;
+    a {
+      color: var(--teal);
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--coral);
+      }
+    }
   }
+}
+
+.contact-or {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: #7a6f60;
+  font-family: Arial, sans-serif;
 }
 
 .contact-form {
