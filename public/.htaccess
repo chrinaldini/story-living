@@ -1,5 +1,26 @@
 Options -MultiViews
 RewriteEngine On
+
+# Force HTTPS. The second condition avoids a redirect loop when TLS is
+# terminated by a front proxy (which sets X-Forwarded-Proto: https).
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Maintenance mode: upload an (empty) file named ".maintenance" to the web root
+# to show the splash page (HTTP 503). Delete it to go live again. Static assets
+# and the splash itself are excluded so the page renders.
+RewriteCond %{DOCUMENT_ROOT}/.maintenance -f
+RewriteCond %{REQUEST_URI} !=/maintenance.html
+RewriteCond %{REQUEST_URI} !\.(ico|svg|png|jpe?g|webp|gif|css|js|woff2?)$ [NC]
+RewriteRule ^ - [R=503,L]
+
+# Show the splash page for server errors too ("something is wrong").
+ErrorDocument 500 /maintenance.html
+ErrorDocument 502 /maintenance.html
+ErrorDocument 503 /maintenance.html
+
+# Serve real files/directories as-is; otherwise fall back to the SPA entry point.
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
 RewriteRule ^ - [L]

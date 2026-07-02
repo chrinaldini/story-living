@@ -1,0 +1,50 @@
+name: Deploy to production (websupport)
+
+# Manual only: click "Run workflow" in the Actions tab, or trigger via
+# `gh workflow run deploy-prod.yml`. The test server (domeneshop) keeps
+# deploying automatically on push to main via deploy.yml.
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy via FTP
+        env:
+          FTP_HOST: ${{ secrets.PROD_FTP_HOST }}
+          FTP_USER: ${{ secrets.PROD_FTP_USER }}
+          FTP_PASS: ${{ secrets.PROD_FTP_PASS }}
+        run: |
+          # Remove the hosting placeholder if it is still there.
+          curl -s --ftp-pasv --user "${FTP_USER}:${FTP_PASS}" \
+            "ftp://${FTP_HOST}/storyliving.se/web/" \
+            -Q "DELE /storyliving.se/web/index.php" || true
+
+          find dist/story-living/browser -type f | while IFS= read -r file; do
+            remote="${file#dist/story-living/browser/}"
+            echo "Uploading: $remote"
+            curl -s -T "$file" \
+              --ftp-create-dirs \
+              --ftp-pasv \
+              --user "${FTP_USER}:${FTP_PASS}" \
+              "ftp://${FTP_HOST}/storyliving.se/web/${remote}" \
+              --retry 3 --retry-delay 2
+          done
+          echo "Production deploy complete."
