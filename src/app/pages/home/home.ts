@@ -186,6 +186,17 @@ export class HomeComponent {
   readonly formError = signal('');
   readonly fieldErrors = signal<Record<string, string>>({});
 
+  // Return to a blank form after a successful send. The form was removed from
+  // the DOM, so its reCAPTCHA container is gone — re-render a fresh widget once
+  // Angular has re-rendered the form.
+  resetForm(): void {
+    this.formState.set('idle');
+    this.formError.set('');
+    this.fieldErrors.set({});
+    this.recaptchaWidgetId = null;
+    setTimeout(() => this.renderRecaptcha());
+  }
+
   async onSubmit(event: Event): Promise<void> {
     event.preventDefault();
     const form = event.target as HTMLFormElement;

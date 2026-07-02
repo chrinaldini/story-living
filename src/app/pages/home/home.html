@@ -58,8 +58,8 @@
 <section class="apartments" id="apartments">
   <div class="inner">
     <div class="eyebrow">Apartments</div>
-    <h2>104 apartments, no two stays the same</h2>
-    <p class="section-lead">Every layout is fully furnished down to the last cushion and coffee cup — designed to feel lived-in from the very first night, whether you're staying ten days or ten months.</p>
+    <h2>Apartments designed for everyday living.</h2>
+    <p class="section-lead">Whether you're staying for ten nights or ten months, Story Living gives you a home that's ready from day one. Fully furnished apartments, thoughtful interiors, and everything you need to settle in from the moment you arrive.</p>
     <div class="card-grid">
       <article class="apt-card">
         <button type="button" class="apt-media" (click)="openGallery('studio')">
@@ -68,7 +68,7 @@
         </button>
         <div class="apt-body">
           <h3>Studio Apartments</h3>
-          <p>A compact, clever world of its own — kitchenette, workspace and bed folded into one bright room for the solo traveler who doesn't need much, just well.</p>
+          <p>A smart, beautifully designed space with everything in one place. Ideal for solo stays, business trips, or anyone who values simplicity without compromising on comfort.</p>
         </div>
       </article>
       <article class="apt-card">
@@ -78,7 +78,7 @@
         </button>
         <div class="apt-body">
           <h3>One-Bedroom Apartments</h3>
-          <p>A door between sleeping and living, a proper kitchen to cook in, and room to spread your work across the table on a Sunday. Built for the long haul.</p>
+          <p>More room to unwind. Separate spaces for sleeping, working, and relaxing make this apartment feel like home, whether you're staying for weeks or months.</p>
         </div>
       </article>
       <article class="apt-card">
@@ -88,7 +88,7 @@
         </button>
         <div class="apt-body">
           <h3>Two-Bedroom Apartments</h3>
-          <p>Two rooms to close the door on, one big enough to gather in. Made for families mid-move and colleagues who'd rather not share a wall they can hear through.</p>
+          <p>Designed for families, colleagues, or shared living. Two private bedrooms with generous common areas create space to live comfortably together.</p>
         </div>
       </article>
     </div>
@@ -197,6 +197,7 @@
 
     @if (formState() === 'success') {
       <p class="form-success">Thank you — your message is on its way. We'll be in touch shortly.</p>
+      <button type="button" class="submit-btn" (click)="resetForm()">Send another message</button>
     } @else {
       <form class="contact-form" (submit)="onSubmit($event)" novalidate>
         <!-- Honeypot: hidden from people, catches bots -->
