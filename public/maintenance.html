@@ -83,14 +83,24 @@
       color: #4a4036;
     }
     .contact {
-      margin-top: 30px;
+      margin: 32px auto 0;
+      width: max-content;
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: auto auto;
+      column-gap: 12px;
+      row-gap: 6px;
       font-size: 15px;
+      text-align: left;
     }
-    .contact a {
+    .contact dt { text-align: right; color: #5a4f43; }
+    .contact dt::after { content: ':'; }
+    .contact dd { margin: 0; }
+    .contact dd a {
       color: var(--teal);
       text-decoration: underline;
     }
-    .contact a:hover { color: var(--coral); }
+    .contact dd a:hover { color: var(--coral); }
 
     @media (max-width: 480px) {
       .word { font-size: 34px; }
@@ -111,10 +121,14 @@
     <h1>Our site is being updated</h1>
     <p>We're making Story Living a little better. The site will be back online shortly — thank you for your patience.</p>
 
-    <p class="contact">
-      For enquiries and bookings, email
-      <a href="mailto:info.lidingo@storyliving.se">info.lidingo&#64;storyliving.se</a>
-    </p>
+    <dl class="contact">
+      <dt>Phone</dt>
+      <dd><a href="tel:+46857239120">+46 8 572 391 20</a></dd>
+      <dt>Enquiries</dt>
+      <dd><a href="mailto:info.lidingo@storyliving.se">info.lidingo&#64;storyliving.se</a></dd>
+      <dt>Reservations</dt>
+      <dd><a href="mailto:reservations@storyliving.se">reservations&#64;storyliving.se</a></dd>
+    </dl>
   </main>
 </body>
 </html>
