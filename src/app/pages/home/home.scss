@@ -274,9 +274,19 @@ h2 {
   }
 }
 
-// "Check availability" button sitting directly under the hero copy
+// "Check availability" button sitting directly under the hero copy.
+// Outlined white (like the header CTA) since it sits on the dark hero image.
 .hero-book-btn {
   margin-top: 28px;
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+
+  &:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: #fff;
+  }
 }
 
 // ─── Hero ──────────────────────────────────────────────────────────────────
