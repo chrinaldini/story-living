@@ -14,9 +14,11 @@ export interface MewsConfig {
 }
 
 export const MEWS_CONFIG: MewsConfig = {
-  // TODO: replace with the real Configuration ID(s) from your Mews DEMO property.
-  configurationIds: ['00000000-0000-0000-0000-000000000000'],
-  // Demo environment. Remove this (and switch the loader script in index.html
-  // back to api.mews.com) when going to production.
-  dataBaseUrl: 'https://api.mews-demo.com',
+  // Production Mews account (Story Hotels). This is the identifier from Mews
+  // Operations → General settings. If the widget loads the wrong/empty property,
+  // use the booking engine's Configuration ID instead
+  // (Settings → Services → Stay → Booking engines → Configuration ID).
+  configurationIds: ['ee98480b-77ff-4e50-afa1-b46a00c508b0'],
+  // Production uses api.mews.com (the loader script in index.html points there),
+  // so no demo dataBaseUrl override.
 };
