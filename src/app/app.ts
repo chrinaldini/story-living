@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/header/header';
 import { FooterComponent } from './shared/footer/footer';
+import { CookieConsentComponent } from './shared/cookie-consent/cookie-consent';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, CookieConsentComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

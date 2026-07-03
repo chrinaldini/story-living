@@ -1,0 +1,12 @@
+@if (visible()) {
+  <div class="consent" role="dialog" aria-label="Cookie consent" aria-live="polite">
+    <p class="consent-text">
+      We use cookies for analytics to understand how the site is used and to improve it.
+      Nothing is loaded until you choose.
+    </p>
+    <div class="consent-actions">
+      <button type="button" class="btn-decline" (click)="decline()">Decline</button>
+      <button type="button" class="btn-accept" (click)="accept()">Accept</button>
+    </div>
+  </div>
+}
