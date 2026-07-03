@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { PageShellBase } from '../page-shell-base';
-import { BookingCtaComponent } from '../../shared/booking-cta/booking-cta';
 import { HomeAmenitiesComponent } from './sections/home-amenities';
 import { HomeApartmentsComponent } from './sections/home-apartments';
 import { HomeAudienceComponent } from './sections/home-audience';
@@ -18,7 +17,6 @@ import { HomeNeighborhoodComponent } from './sections/home-neighborhood';
   imports: [
     HomeHeroComponent,
     HomeIntroComponent,
-    BookingCtaComponent,
     HomeAudienceComponent,
     HomeIslandComponent,
     HomeApartmentsComponent,
@@ -29,7 +27,6 @@ import { HomeNeighborhoodComponent } from './sections/home-neighborhood';
   ],
   template: `
     <sl-home-hero [offset]="heroOffset()" />
-    <sl-booking-cta />
     <sl-home-intro />
     <sl-home-audience />
     <sl-home-apartments />

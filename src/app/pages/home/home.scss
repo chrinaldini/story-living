@@ -254,21 +254,7 @@ h2 {
   }
 }
 
-// ─── Booking CTA ───────────────────────────────────────────────────────────
-
-.booking-cta {
-  background: #fff;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-
-  .inner {
-    text-align: center;
-  }
-
-  .section-lead {
-    margin: 0 auto 30px;
-  }
-}
+// ─── Booking button ────────────────────────────────────────────────────────
 
 .book-btn {
   cursor: pointer;
@@ -286,6 +272,11 @@ h2 {
     background: var(--coral);
     border-color: var(--coral);
   }
+}
+
+// "Check availability" button sitting directly under the hero copy
+.hero-book-btn {
+  margin-top: 28px;
 }
 
 // ─── Hero ──────────────────────────────────────────────────────────────────
