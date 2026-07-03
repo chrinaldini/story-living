@@ -5,7 +5,7 @@ import { Component, input } from '@angular/core';
   template: `
     <section
       class="hero"
-      style="--hero-image: url('/images/misc/emil-lif-0289.jpg')"
+      style="--hero-image: url('/images/misc/booboo-petter-buling-4-juli-img-5837.jpg')"
       [style.--hero-shift.px]="-offset()"
     >
       <div class="hero-content">
