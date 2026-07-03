@@ -1,6 +1,17 @@
 import { afterNextRender, Directive, HostListener, inject, signal } from '@angular/core';
 import { Location } from '@angular/common';
 import { HOME_SECTIONS } from '../app.routes';
+import { MEWS_CONFIG } from './booking/mews.config';
+
+interface MewsGlobal {
+  Mews?: {
+    Distributor(
+      options: { configurationIds: string[]; openElements?: string },
+      callback?: unknown,
+      settings?: { dataBaseUrl?: string }
+    ): void;
+  };
+}
 
 /**
  * Shared page-level behaviour for the two landing pages: hero parallax,
@@ -33,7 +44,20 @@ export abstract class PageShellBase {
         this.currentSection = initialSection;
         this.deepLinkScroll(initialSection);
       }
+      this.initMews();
     });
+  }
+
+  // Bind the Mews Distributor to every ".distributor-open" button on the page
+  // (the booking CTA bands and the contact section's booking button).
+  private initMews(): void {
+    const mews = (window as MewsGlobal).Mews;
+    if (!mews) return;
+    mews.Distributor(
+      { configurationIds: MEWS_CONFIG.configurationIds, openElements: '.distributor-open' },
+      undefined,
+      MEWS_CONFIG.dataBaseUrl ? { dataBaseUrl: MEWS_CONFIG.dataBaseUrl } : undefined
+    );
   }
 
   // Scroll to a deep-linked section. Images and web fonts load after the first

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PageShellBase } from '../page-shell-base';
+import { BookingCtaComponent } from '../../shared/booking-cta/booking-cta';
 import { CorpAmenitiesComponent } from './sections/corp-amenities';
 import { CorpApartmentsComponent } from './sections/corp-apartments';
 import { CorpAudienceComponent } from './sections/corp-audience';
@@ -17,6 +18,7 @@ import { CorpNeighborhoodComponent } from './sections/corp-neighborhood';
   imports: [
     CorpHeroComponent,
     CorpIntroComponent,
+    BookingCtaComponent,
     CorpAudienceComponent,
     CorpIslandComponent,
     CorpApartmentsComponent,
@@ -28,6 +30,7 @@ import { CorpNeighborhoodComponent } from './sections/corp-neighborhood';
   template: `
     <sl-corp-hero [offset]="heroOffset()" />
     <sl-corp-intro />
+    <sl-booking-cta />
     <sl-corp-audience />
     <sl-corp-apartments />
     <sl-corp-island />

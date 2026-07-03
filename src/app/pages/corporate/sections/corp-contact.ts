@@ -9,9 +9,11 @@ import { ContactFormBehavior } from '../../contact-form-behavior';
         <div class="eyebrow">Get in touch</div>
         <h2>Enquiries &amp; reservations</h2>
         <p class="section-lead">
-          Tell us a little about your stay and we'll get back to you. For bookings, choose
-          "Reservation" and it goes straight to our reservations team.
+          Tell us a little about your stay and we'll get back to you. Book directly below, or send
+          us a message — whatever suits you best.
         </p>
+
+        <button type="button" class="book-btn distributor-open contact-book-btn">Check availability</button>
 
         <dl class="contact-details">
           <dt>Phone</dt>

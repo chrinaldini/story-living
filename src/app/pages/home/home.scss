@@ -254,6 +254,40 @@ h2 {
   }
 }
 
+// ─── Booking CTA ───────────────────────────────────────────────────────────
+
+.booking-cta {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+
+  .inner {
+    text-align: center;
+  }
+
+  .section-lead {
+    margin: 0 auto 30px;
+  }
+}
+
+.book-btn {
+  cursor: pointer;
+  border: 1px solid var(--teal);
+  background: var(--teal);
+  color: #fff;
+  padding: 15px 36px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  transition: background 0.2s, border-color 0.2s;
+
+  &:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+  }
+}
+
 // ─── Hero ──────────────────────────────────────────────────────────────────
 
 .hero {
@@ -526,8 +560,12 @@ h2 {
   }
 }
 
+.contact-book-btn {
+  margin: 6px 0 10px;
+}
+
 .contact-details {
-  margin: 20px auto 0;
+  margin: 26px auto 0;
   width: max-content;
   max-width: 100%;
   display: grid;
