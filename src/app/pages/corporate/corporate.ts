@@ -29,8 +29,8 @@ import { CorpNeighborhoodComponent } from './sections/corp-neighborhood';
   ],
   template: `
     <sl-corp-hero [offset]="heroOffset()" />
-    <sl-corp-intro />
     <sl-booking-cta />
+    <sl-corp-intro />
     <sl-corp-audience />
     <sl-corp-apartments />
     <sl-corp-island />

@@ -29,8 +29,8 @@ import { HomeNeighborhoodComponent } from './sections/home-neighborhood';
   ],
   template: `
     <sl-home-hero [offset]="heroOffset()" />
-    <sl-home-intro />
     <sl-booking-cta />
+    <sl-home-intro />
     <sl-home-audience />
     <sl-home-apartments />
     <sl-home-island />
