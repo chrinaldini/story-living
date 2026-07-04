@@ -13,7 +13,7 @@ import { ContactFormBehavior } from '../../contact-form-behavior';
           us a message — whatever suits you best.
         </p>
 
-        <button type="button" class="book-btn distributor-open contact-book-btn">Check availability</button>
+        <button type="button" class="book-btn distributor-open contact-book-btn" data-ga="contact">Check availability</button>
 
         <dl class="contact-details">
           <dt>Phone</dt>

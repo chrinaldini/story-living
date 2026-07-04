@@ -17,7 +17,7 @@ import { Component, input } from '@angular/core';
           playgrounds all close by. Room to spread out, a real kitchen for family dinners, and a
           neighbourhood made for slow mornings and long summer evenings.
         </p>
-        <button type="button" class="book-btn distributor-open hero-book-btn">Check availability</button>
+        <button type="button" class="book-btn distributor-open hero-book-btn" data-ga="hero">Check availability</button>
       </div>
     </section>
   `,

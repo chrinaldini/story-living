@@ -330,8 +330,9 @@ h2 {
   padding: 0 24px;
   color: #fff;
 
+  // White (not coral) — coral is too low-contrast against the hero photo.
   .eyebrow {
-    color: var(--coral);
+    color: #fff;
   }
 
   h1 {

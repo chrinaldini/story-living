@@ -2,6 +2,7 @@ import { afterNextRender, Directive, HostListener, inject, signal } from '@angul
 import { Location } from '@angular/common';
 import { HOME_SECTIONS } from '../app.routes';
 import { MEWS_CONFIG } from './booking/mews.config';
+import { AnalyticsService } from '../shared/analytics/analytics';
 
 interface MewsGlobal {
   Mews?: {
@@ -22,6 +23,7 @@ interface MewsGlobal {
 @Directive()
 export abstract class PageShellBase {
   private readonly location = inject(Location);
+  private readonly analytics = inject(AnalyticsService);
 
   readonly segment: 'family' | 'corporate';
   private readonly basePath: string;
@@ -98,7 +100,10 @@ export abstract class PageShellBase {
 
     if (active !== this.currentSection) {
       this.currentSection = active;
-      this.location.replaceState(this.basePath + (active ? '/' + active : '') || '/');
+      const path = this.basePath + (active ? '/' + active : '') || '/';
+      this.location.replaceState(path);
+      // replaceState never reaches the router, so report the section here.
+      this.analytics.trackSectionView(path);
     }
   }
 }

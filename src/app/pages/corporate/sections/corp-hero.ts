@@ -17,7 +17,7 @@ import { Component, input } from '@angular/core';
           for assignments, relocations and long-term postings that need to feel like more than a
           hotel room.
         </p>
-        <button type="button" class="book-btn distributor-open hero-book-btn">Check availability</button>
+        <button type="button" class="book-btn distributor-open hero-book-btn" data-ga="hero">Check availability</button>
       </div>
     </section>
   `,
