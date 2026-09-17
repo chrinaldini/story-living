@@ -15,7 +15,7 @@ import { Component, input } from '@angular/core';
           104 spacious, fully furnished apartments on Lidingö — a calm green island just ten minutes
           from central Stockholm, with forest trails, swimming spots and the city's museums and
           playgrounds all close by. Room to spread out, a real kitchen for family dinners, and a
-          neighbourhood made for slow mornings and long summer evenings.
+          neighbourhood made for slow mornings and long evenings.
         </p>
         <button type="button" class="book-btn distributor-open hero-book-btn" data-ga="hero">Check availability</button>
       </div>
