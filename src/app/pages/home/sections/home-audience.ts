@@ -23,7 +23,7 @@ import { Component } from '@angular/core';
           <div class="audience-card">
             <h3>Longer Stays</h3>
             <p>
-              Settle in for weeks or months, whatever the season. Flexible terms and a real home base
+              Settle in for weeks or months, whatever the season. Flexible options for your needs and a real home base
               for living, working and exploring Stockholm at your own pace.
             </p>
           </div>
