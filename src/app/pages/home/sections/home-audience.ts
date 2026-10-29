@@ -21,10 +21,10 @@ import { Component } from '@angular/core';
             </p>
           </div>
           <div class="audience-card">
-            <h3>Longer Summer Stays</h3>
+            <h3>Longer Stays</h3>
             <p>
-              Settle in for weeks of long, light evenings. Flexible terms and a real home base for
-              exploring Stockholm and the archipelago at your own pace.
+              Settle in for weeks or months, whatever the season. Flexible terms and a real home base
+              for living, working and exploring Stockholm at your own pace.
             </p>
           </div>
           <div class="audience-card">
